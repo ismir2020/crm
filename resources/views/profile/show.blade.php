@@ -16,7 +16,6 @@
         <div class="card-body">
           <form method="POST" action="{{ route('profile.update') }}">
             @csrf
- 
             <div class="form-group">
               <label for="email">{{ __('messages.Email') }}</label>
               <input type="text" class="form-control" value="{{ $user->email }}" readonly>
