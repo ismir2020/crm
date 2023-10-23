@@ -9,5 +9,16 @@ class Lead extends Model
 {
     use HasFactory;
 
-    // Hier kannst du die gewünschten Eigenschaften und Methoden für das Lead-Modell hinzufügen
+    // Specify the fillable fields
+    protected $fillable = [
+        'name', 
+        'email', 
+        'phone',
+    ];
+
+    // Add relationship to User model
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

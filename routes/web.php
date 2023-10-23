@@ -50,3 +50,7 @@ Route::middleware('auth')->group(function () {
 
 // Show Leads Route
 Route::get('/leads', [LeadController::class, 'showAllLeads'])->name('leads.all');
+// Create Lead Route
+Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
+// Save new Lead Route
+Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');
