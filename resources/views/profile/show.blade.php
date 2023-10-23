@@ -56,8 +56,9 @@
               <input type="text" class="form-control" name="tax_number" value="{{ $user->tax_number }}">
             </div>
 
-            <button type="submit" class="btn btn-primary">{{ __('messages.Save') }}</button>
-          </form>
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary">{{ __('messages.Save') }}</button>
+            </div>          </form>
         </div>
       </div>
     </div>
