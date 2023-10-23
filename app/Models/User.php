@@ -48,4 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the leads associated with the user.
+     */
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
+    }
 }

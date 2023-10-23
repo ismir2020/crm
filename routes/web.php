@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\ShowProfileController;
+use App\Http\Controllers\LeadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ShowProfileController::class, 'show'])->name('profile');
     Route::post('profile/update', [ShowProfileController::class, 'update'])->name('profile.update');
 });
+
+// Show Leads Route
+Route::get('/leads', [LeadController::class, 'showAllLeads'])->name('leads.all');
