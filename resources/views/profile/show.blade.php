@@ -18,8 +18,9 @@
             @csrf
             <div>
               <label for="email">{{ __('messages.Email') }}</label>
-              <input type="text" class="form-control" value="{{ $user->email }}" readonly>
+              <p>{{ $user->email }}</p> 
             </div>
+            
             <div class="form-group">
               <label for="company">{{ __('messages.Company') }}</label>  
               <input type="text" class="form-control" name="company" value="{{ $user->company }}">
