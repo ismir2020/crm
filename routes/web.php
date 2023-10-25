@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\ShowProfileController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\UserColumnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,18 @@ Route::middleware('auth')->group(function () {
 
 // Show Leads Route
 Route::get('/leads', [LeadController::class, 'showAllLeads'])->name('leads.all');
+
 // Create Lead Route
 Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
+
 // Save new Lead Route
 Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');
+
+// Create custom columns in user view leads
+Route::get('/user-columns/create', [UserColumnController::class, 'create'])->name('user-columns.create');
+Route::get('/user-columns', [UserColumnController::class, 'index']);
+Route::get('/user-columns/{userColumn}/edit', [UserColumnController::class, 'edit'])->name('user-columns.edit');
+Route::delete('/user-columns/{userColumn}', [UserColumnController::class, 'destroy'])->name('user-columns.destroy');
+
+Route::post('/user-columns', [UserColumnController::class, 'store'])->name('user-columns.store');
+Route::put('/user-columns/{userColumn}', [UserColumnController::class, 'update'])->name('user-columns.update');

@@ -1,138 +1,98 @@
-<!-- resources/views/leads.blade.php --> 
- 
+blade
+@extends('layouts.app')
 
- 
-@include('layouts.header')    
- 
-
- 
-<h1>Leads für Benutzer {{$user->name}}</h1> 
- 
-
- 
-<div class="container-fluid">
- 
-    <div class="row">
- 
-        <div class="col-12">
- 
-            <div class="card">
- 
-                <div class="card-header">
- 
-                    <form class="form-inline float-left">
- 
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
- 
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
- 
-                    </form>
- 
-                    <div class="float-right">
- 
-                        <select class="custom-select" style="width: auto;">
- 
-                            <option selected>10</option>
- 
-                            <option value="1">25</option>
- 
-                            <option value="2">50</option>
- 
-                            <option value="3">100</option>
- 
-                        </select>
- 
-                        <span>Einträge pro Seite</span>
- 
+@section('content')
+    <h1>Leads für Benutzer {{ $user->name }}</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <!-- Search form -->
+                        <form class="form-inline float-left">
+                            <input class="form-control mr-sm-2" type="search" id="search-input" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="search-btn">Search</button>
+                        </form>
+                        <!-- Entries per page select -->
+                        <div class="float-right">
+                            <select class="custom-select" style="width: auto;" id="entries-select">
+                                <option selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>Einträge pro Seite</span>
+                        </div>
                     </div>
- 
+                    <div class="card-body">
+                        <table id="leads-table" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Telefon</th>
+                                    @foreach($customColumns as $column)
+                                        <th>{{ $column->column_name }}</th>
+                                    @endforeach
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($leads as $lead)
+                                    <tr>
+                                        <td>{{ $lead->name }}</td>
+                                        <td>{{ $lead->email }}</td>
+                                        <td>{{ $lead->phone }}</td>
+                                        @foreach($customColumns as $column)
+                                            <td>{{ $lead->customColumns[$column->column_name] ?? '' }}</td>
+                                        @endforeach
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm">Anzeigen</a>
+                                            <a href="#" class="btn btn-warning btn-sm">Bearbeiten</a>
+                                            <a href="#" class="btn btn-danger btn-sm">Löschen</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
- 
-                <div class="card-body">
- 
-                    <table id="leads-table" class="table table-striped">
- 
-                        <thead>
- 
-                            <tr>
- 
-                                <th>Name</th>
- 
-                                <th>Email</th>
- 
-                                <th>Telefon</th>
- 
-                                <th>Aktionen</th>
- 
-                            </tr>
- 
-                        </thead>
- 
-                        <tbody>
- 
-                            @foreach($leads as $lead)
- 
-                            <tr>
- 
-                                <td>{{ $lead->name }}</td>
- 
-                                <td>{{ $lead->email }}</td>
- 
-                                <td>{{ $lead->phone }}</td>
- 
-                                <td>
- 
-                                    <a href="#" class="btn btn-primary btn-sm">Anzeigen</a>
- 
-                                    <a href="#" class="btn btn-warning btn-sm">Bearbeiten</a>
- 
-                                    <a href="#" class="btn btn-danger btn-sm">Löschen</a>
- 
-                                </td>
- 
-                            </tr>
- 
-                            @endforeach
- 
-                        </tbody>
- 
-                    </table>
- 
-                </div>
- 
             </div>
- 
         </div>
- 
     </div>
- 
-</div>
- 
+@endsection
 
- 
-<!-- Bootstrap CSS via CDN -->
- 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-<!-- jQuery -->
- 
-<script src=" " target="blank">https://code.jquery.com/jquery-3.3.1.slim.min.js"> 
-<!-- Bootstrap JavaScript via CDN -->
- 
-<script src=" " target="blank">https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"> 
-<!-- Datatables CSS via CDN -->
- 
-<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
- 
-<!-- Datatables JavaScript via CDN -->
- 
-<script src=" " target="blank">https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"> 
-<script>
- 
-    $(document).ready(function() {
- 
-        $('#leads-table').DataTable();
- 
-    } );
- 
-</script>
+@section('styles')
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/searchbuilder/1.6.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/searchbuilder/1.6.0/js/dataTables.searchBuilder.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var leadsTable = $('#leads-table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'colvis'
+                ]
+            });
+
+            // Live search functionality
+            $('#search-btn').click(function() {
+                leadsTable.search($('#search-input').val()).draw();
+            });
+
+            // Change entries per page
+            $('#entries-select').change(function() {
+                leadsTable.page.len($('#entries-select').val()).draw();
+            });
+        });
+    </script>
+@endsection
